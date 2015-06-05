@@ -344,19 +344,4 @@ public class AgregarEmpleado extends EmpleadosGUI {
 		}
 	}
 
-	/**
-	 * Campos rellenos con información para facilitar las tareas de pruebas.
-	 */
-	private void camposPruebas() {
-		txfldNombreApellidos.setText("Alberto");
-		txfldDni.setText("90999999-J");
-		txfldDireccion.setText("Calle");
-		txfldEmail.setText("name@gmail.com");
-		txfldFechaNacimiento.setText("10/03/1980");
-		txfldTelefono.setText("957123456");
-		txfldAlta.setText("02/09/2009");
-		txfldPrecioHora.setText(Integer.toString(9));
-		txfldHorasSemanales.setText(Integer.toString(40));
-	}
-
 }
