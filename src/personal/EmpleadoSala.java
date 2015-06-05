@@ -58,7 +58,7 @@ public class EmpleadoSala extends Persona implements Serializable {
 		setPuesto(puesto);
 		this.titulacion = titulacion;
 		this.uniforme = uniforme;
-		setTurno(turno);
+		this.turno = Turno.SIN_TURNO;
 	}
 	
 	
@@ -121,17 +121,6 @@ public class EmpleadoSala extends Persona implements Serializable {
 	public void setTurno(Turno turno) {
 		this.turno = turno;
 	}
-
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "EmpleadoSala: puesto=" + puesto + " turno=" + turno + "]";
-	}
-	
 	
 
 }

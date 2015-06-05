@@ -402,22 +402,6 @@ public class Persona implements Serializable, Salariable, Comparable<Persona> {
 			return false;
 		return true;
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Persona [nombreYApellidos=" + nombreYApellidos
-				+ ", precioHora=" + precioHora + ", dni=" + dni
-				+ ", direccion=" + direccion + ", fechaNacimiento="
-				+ fechaNacimiento + ", telefono=" + telefono + ", email="
-				+ email + ", alta=" + alta + ", horasSemanales="
-				+ horasSemanales + "]";
-	}
-
-	
-	
 	
 
 }

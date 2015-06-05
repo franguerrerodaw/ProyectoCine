@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import javax.swing.JComboBox;
 import personal.Puesto;
 import personal.Uniforme;
-import personal.Zona;
 /**
  * Clase padre donde se establecen los distintos campos respecto a los empleados.
  * @author Francisco Javier Guerrero Molina

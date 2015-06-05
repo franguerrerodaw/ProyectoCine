@@ -3,11 +3,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import personal.Limpiador;
 import personal.ListaPersonas;
 import personal.Persona;
-import personal.Puesto;
 import personal.Zona;
 /**
  * Asigna zonas de limpieza a los limpiadores.
@@ -60,13 +58,14 @@ public class AsignarZonaLimpieza extends FuncionalidadesGUI {
 		btnGuardar.setVisible(false);
 		btnComparar.setVisible(false);
 		
+		cmbxZona.setEnabled(false);
+		
 		
 		this.empleados = mostrarPuesto(personas);
+		this.limpiador = (Limpiador) empleados.getIndex(indice);
 		
 		comprobar();
 		
-		cmbxZona.setModel(new DefaultComboBoxModel<Zona>(Zona.values()));
-		cmbxZona.setEnabled(false);
 		
 		
 		/** ***************** Funcionalidades Botones ******************  */
@@ -88,6 +87,7 @@ public class AsignarZonaLimpieza extends FuncionalidadesGUI {
 		
 		btnCambiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cmbxZona.setModel(new DefaultComboBoxModel<Zona>(Zona.values()));
 				cmbxZona.setEnabled(true);
 				btnCambiar.setVisible(false);
 				btnGuardar.setVisible(true);
@@ -115,7 +115,7 @@ public class AsignarZonaLimpieza extends FuncionalidadesGUI {
 	 * Muestra el elemento anterior del ArrayList empleados.
 	 */
 	private void mostrarAnterior() {
-		mostrarEmpleado();
+		mostrarEmpleado(empleados.getIndex(--indice));
 		comprobarArray();
 	}
 	
@@ -124,7 +124,7 @@ public class AsignarZonaLimpieza extends FuncionalidadesGUI {
 	 * Muestra el elemento siguiente del ArrayList empleados.
 	 */
 	private void mostrarSiguiente() {
-		mostrarEmpleado();
+		mostrarEmpleado(empleados.getIndex(++indice));
 		comprobarArray();
 	}
 	
@@ -133,7 +133,7 @@ public class AsignarZonaLimpieza extends FuncionalidadesGUI {
 	 */
 	private void comprobar() {
 		indice = 0;
-		mostrarEmpleado();
+		mostrarEmpleado(empleados.getIndex(indice));
 		comprobarArray();
 	}
 	
@@ -156,33 +156,20 @@ public class AsignarZonaLimpieza extends FuncionalidadesGUI {
 	 * Muestra el empleado con la información almacenada en el ArrayList.
 	 * @param persona
 	 */
-	private void mostrarEmpleado() {
-		limpiador = (Limpiador) empleados.getIndex(indice);
-		txfldNombreApellidos.setText(limpiador.getNombreYApellidos());
-		txfldDni.setText(limpiador.getDni());
-		cmbxPuesto.addItem(limpiador.getPuesto());
-		cmbxPuesto.setSelectedItem(limpiador.getPuesto());
-		cmbxZona.addItem(limpiador.getZona());
-		cmbxZona.setSelectedItem(limpiador.getZona());
-	}
-	
-	
-	/**
-	 * Creación del ArrayList de Limpiadores. NO SE UTILIZA.
-	 * @return ArrayList con los empleados de sala.
-	 */
-	private ArrayList<Persona> crearArrayList(){
-		ArrayList<Persona> personas = empleados.getPuesto(Puesto.LIMPIEZA);
-		if (personas.isEmpty())
-			JOptionPane.showMessageDialog(contentPanel, "No existe ningún empleado con el puesto elegido.", "Error", JOptionPane.ERROR_MESSAGE);	
-		return personas;
+	private void mostrarEmpleado(Persona persona) {
+		txfldNombreApellidos.setText(persona.getNombreYApellidos());
+		txfldDni.setText(persona.getDni());
+		cmbxPuesto.addItem(((Limpiador) persona).getPuesto());
+		cmbxPuesto.setSelectedItem(((Limpiador) persona).getPuesto());
+		cmbxZona.addItem(((Limpiador) persona).getZona());
+		cmbxZona.setSelectedItem(((Limpiador) persona).getZona());
 	}
 	
 	
 	/**
 	 * Colección de Limpiadores.
 	 * @param empleados
-	 * @return colección de empleados de sala.
+	 * @return colección de limpiadores.
 	 */
 	private ListaPersonas mostrarPuesto(ArrayList<Persona> empleados) {
 		ListaPersonas mostrarPuesto = new ListaPersonas();
@@ -197,8 +184,6 @@ public class AsignarZonaLimpieza extends FuncionalidadesGUI {
 	 * @param empleados
 	 */
 	private void modificarZona() {
-		limpiador = (Limpiador) empleados.getIndex(indice);
-		
 		switch ((Zona) cmbxZona.getSelectedItem()) {
 			case SIN_ZONA:
 				limpiador.setZona(Zona.SIN_ZONA);
@@ -217,8 +202,6 @@ public class AsignarZonaLimpieza extends FuncionalidadesGUI {
 				break;
 			case SALA3:
 				limpiador.setZona(Zona.SALA3);
-				break;
-			default:
 				break;
 		}
 	}

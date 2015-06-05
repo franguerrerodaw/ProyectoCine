@@ -36,15 +36,20 @@ public class Ficheros implements Serializable {
 	private static JFrame frame = new JFrame();
 	
 	/**
-	 * Filtro para la extensión .obj
+	 * Filtro para la extensión .cin
 	 */
 	private static FileNameExtensionFilter filtro = new FileNameExtensionFilter("objeto.cin", "cin");
 	
+	/**
+	 * Objeto de la clase ListaPeliculas
+	 */
 	private static ListaPeliculas cartelera;
 	
+	
+	/**
+	 * Objeto de la clase ListaPersonas
+	 */
 	private static ListaPersonas empleados;
-	
-	
 	
 	
 	/**

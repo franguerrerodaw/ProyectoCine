@@ -140,8 +140,7 @@ public class AgregarEmpleado extends EmpleadosGUI {
 		cmbxUniforme.setVisible(false);
 		lblTitulacion.setVisible(false);
 		txfldTitulacion.setVisible(false);
-
-		camposPruebas();
+		
 
 		cmbxUniforme.setModel(new DefaultComboBoxModel<Uniforme>(Uniforme
 				.values())); // inicia el combobox con la enumeración uniforme.

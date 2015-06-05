@@ -1,13 +1,8 @@
 package utiles;
-
+import java.awt.Frame;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import entornoGrafico.Principal;
 import peliculas.ListaPeliculas;
 import personal.ListaPersonas;
 
@@ -19,12 +14,6 @@ import personal.ListaPersonas;
  *
  */
 public class Gestion {
-
-	/**
-	 * JFrame Gestion.
-	 */
-	private static JFrame frame = new JFrame();
-	
 	
 	/**
 	 * Instancia de la clase ListaPersonas
@@ -48,9 +37,10 @@ public class Gestion {
 	 */
 	protected static boolean guardado = false;
 
+	
+	
 	/**
 	 * Modifica el valor de la variable modificado
-	 * 
 	 * @param valor
 	 * @return verdadero si se ha modificado el ArrayList.
 	 */
@@ -61,7 +51,6 @@ public class Gestion {
 
 	/**
 	 * Getter Modificado
-	 * 
 	 * @return verdadero si se ha modificado el ArrayList.
 	 */
 	public static boolean getModificado() {
@@ -70,10 +59,8 @@ public class Gestion {
 
 	/**
 	 * Modifica el título de la barra según el fichero existente.
-	 * 
-	 * @param frame
 	 */
-	public static void getTitle(JFrame frame) {
+	public static void getTitle(Frame frame) {
 		if (Gestion.getGuardado() == false)
 			frame.setTitle("Administración Cine  -  Sin_Título");
 		else
@@ -84,7 +71,6 @@ public class Gestion {
 	/**
 	 * Modifica el estado de la variable guardado. Se utiliza para cambiar el
 	 * título en la barra de título
-	 * 
 	 * @param valor
 	 */
 	public static void setGuardado(boolean valor) {
@@ -93,7 +79,6 @@ public class Gestion {
 
 	/**
 	 * Getter Guardado.
-	 * 
 	 * @return verdadero si se ha guardado el fichero.
 	 */
 	public static boolean getGuardado() {
@@ -104,13 +89,9 @@ public class Gestion {
 
 	/**
 	 * Gestiona la creación de un nuevo fichero.
-	 * 
-	 * @param frame
-	 * @param contentPanel
-	 * @param cartelera
 	 */
-	public static void nuevo() {
-		if (Gestion.getModificado() == true) { // true == ArrayList ha sido modificado
+	public static void nuevo(Frame frame) {
+		if (Gestion.getModificado()) { // true == ArrayList ha sido modificado
 			int n = JOptionPane.showOptionDialog(frame, "La administración del cine ha sido modificada. \n¿Desea guardar los cambios?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 			switch (n) {
 			case JOptionPane.YES_OPTION:
@@ -123,6 +104,7 @@ public class Gestion {
 				}
 				break;
 			case JOptionPane.NO_OPTION:
+				gestionNuevo(frame);
 				break;
 			}
 		}
@@ -131,63 +113,39 @@ public class Gestion {
 
 	/**
 	 * Gestiona la apertura de un fichero.
-	 * 
-	 * @param frame
-	 * @param contentPanel
-	 * @param cartelera
 	 */
-	public static void abrir() {
+	public static void abrir(Frame frame) {
 		if (Gestion.getModificado() == true) { // true == ArrayList ha sido modificado.
 			int n = JOptionPane.showOptionDialog(frame, "La administración del cine ha sido modificada. \n¿Desea guardar los cambios?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 			switch (n) {
-			case JOptionPane.YES_OPTION:
-				try {
-					Ficheros.guardar(cartelera, empleados);
-				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: FileNotFoundException", JOptionPane.ERROR_MESSAGE);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: IOException", JOptionPane.ERROR_MESSAGE);
-				}
-				break;
-			case JOptionPane.NO_OPTION:
-				try {
-					Ficheros.abrir();
-					Gestion.cartelera = (ListaPeliculas) Ficheros.leerCartelera();
-					Gestion.empleados = (ListaPersonas) Ficheros.leerEmpleados();
-				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: FileNotFoundException", JOptionPane.ERROR_MESSAGE);
-				} catch (ClassNotFoundException e) {
-					JOptionPane.showMessageDialog(frame, "El fichero no es válido", "Error: ClassNotFoundException", JOptionPane.ERROR_MESSAGE);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: IOException", JOptionPane.ERROR_MESSAGE);
-				}
+				case JOptionPane.YES_OPTION:
+					try {
+						Ficheros.guardar(cartelera, empleados);
+					} catch (FileNotFoundException e) {
+						JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: FileNotFoundException", JOptionPane.ERROR_MESSAGE);
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: IOException", JOptionPane.ERROR_MESSAGE);
+					}
+					break;
+				case JOptionPane.NO_OPTION:
+					abrirFichero(frame);
+					break;
 			}
 		} else {
-			try {
-				Ficheros.abrir();
-				Gestion.cartelera = (ListaPeliculas) Ficheros.leerCartelera();
-				Gestion.empleados = (ListaPersonas) Ficheros.leerEmpleados();
-			} catch (FileNotFoundException e) {
-				JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: FileNotFoundException", JOptionPane.ERROR_MESSAGE);
-			} catch (ClassNotFoundException e) {
-				JOptionPane.showMessageDialog(frame, "El fichero no es válido", "Error: ClassNotFoundException", JOptionPane.ERROR_MESSAGE);
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: IOException", JOptionPane.ERROR_MESSAGE);
-			}
+			abrirFichero(frame);
 		}
-		gestionModificadoAbrir(frame);
+		gestionModificadoGuardado(frame);
 	}
+
+	
 
 	/**
 	 * Gestiona el guardado de un fichero que ya existe.
-	 * 
-	 * @param frame
-	 * @param cartelera
 	 */
-	public static void guardar() {
+	public static void guardar(Frame frame) {
 		try {
 			Ficheros.guardar(cartelera, empleados);
-			gestionModificadoNuevo(frame);
+			gestionModificadoGuardado(frame);
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(frame, "No se ha podido guardar el archivo", "Error: FileNotFoundException", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
@@ -197,58 +155,64 @@ public class Gestion {
 
 	/**
 	 * Gestiona el guardado de un fichero por primera vez.
-	 * 
-	 * @param cartelera
 	 */
-	public static void guardarComo() {
+	public static void guardarComo(Frame frame) {
 		try {
 			Ficheros.guardarComo(cartelera, empleados);
-			Gestion.setModificado(false);
+			gestionModificadoGuardado(frame);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(frame, "Error al guardar", "Error: IOException", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	/**
-	 * Crea un nuevo ArrayList.
-	 * 
-	 * @param frame
+	 * Crea un nuevo ArrayList. Restablece los valores de fichero modificado, fichero guardado y título cuando se crea un nuevo fichero.
 	 */
-	private static void gestionNuevo(JFrame frame) {
+	private static void gestionNuevo(Frame frame) {
 		Gestion.cartelera = new ListaPeliculas();
 		Gestion.empleados = new ListaPersonas();
 		Ficheros.nuevo();
-		gestionModificadoNuevo(frame);
-	}
-
-	/**
-	 * Restablece los valores de fichero modificado, fichero guardado y título cuando se crea un nuevo fichero.
-	 * 
-	 * @param frame
-	 */
-	private static void gestionModificadoNuevo(JFrame frame) {
-		Gestion.setModificado(false);
+		Gestion.setModificado(true);
 		Gestion.setGuardado(false); // modifica el estado del título.
 		Gestion.getTitle(frame); // muestra la ruta del fichero en la barra de título.
 	}
 	
 	
 	/**
-	 * Restablece los valores de fichero modificado, fichero guardado y título para los ficheros que se abren.
-	 * @param frame
+	 * Restablece los valores de fichero modificado, fichero guardado y título para los ficheros que se guardan.
 	 */
-	private static void gestionModificadoAbrir(JFrame frame) {
+	private static void gestionModificadoGuardado(Frame frame) {
 		Gestion.setModificado(false);
-		Gestion.setGuardado(true); // modifica el estado del título.
-		Gestion.getTitle(frame); // muestra la ruta del fichero en la barra de título.
+		Gestion.setGuardado(true);
+		Gestion.getTitle(frame);
+	}
+	
+	/**
+	 * Abre un fichero.
+	 */
+	private static void abrirFichero(Frame frame) {
+		try {
+			Ficheros.abrir();
+			Gestion.cartelera = (ListaPeliculas) Ficheros.leerCartelera();
+			Gestion.empleados = (ListaPersonas) Ficheros.leerEmpleados();
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: FileNotFoundException", JOptionPane.ERROR_MESSAGE);
+		} catch (ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(frame, "El fichero no es válido", "Error: ClassNotFoundException", JOptionPane.ERROR_MESSAGE);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(frame, "No se ha podido abrir el fichero", "Error: IOException", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	
-	public static void salir() {
+	/**
+	 * Permite avisar al usuario si desea guardar la configuración antes de salir si se ha realizado algún cambio.
+	 */
+	public static void salir(Frame frame) {
 		if (Gestion.getModificado()){
 			int confirm = JOptionPane.showOptionDialog(null, "La administración del cine ha sido modificada. \n¿Desea guardar los cambios?", "Salir", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 			if (confirm == 0)
-				Gestion.guardar();
+				Gestion.guardar(frame);
 			if (confirm == 1)
 				System.exit(0);
 			else

@@ -46,7 +46,7 @@ public class Limpiador extends Persona implements Serializable {
 	public Limpiador(String nombreYApellidos, int sueldo, String dni, String direccion, Date fechaNacimiento, String telefono, String email, Date alta, int horasSemanales) throws NombreInvalidoException, DniInvalidoException, EmailInvalidoException {
 		super(nombreYApellidos, sueldo, dni, direccion, fechaNacimiento, telefono, email, alta, horasSemanales);
 		setPuesto(puesto);
-		setZona(zona);
+		this.zona = Zona.SIN_ZONA;
 	}
 	
 	

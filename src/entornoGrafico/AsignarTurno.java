@@ -4,14 +4,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 
 import personal.EmpleadoSala;
 import personal.ListaPersonas;
 import personal.Persona;
-import personal.Puesto;
 import personal.Turno;
-import utiles.Gestion;
 
 /**
  * Asigna turnos a los empleados de sala.
@@ -35,7 +32,7 @@ public class AsignarTurno extends FuncionalidadesGUI {
 	/**
 	 * Objeto de la clase Persona
 	 */
-	private Persona empleadoSala;
+	private EmpleadoSala empleadoSala;
 
 	/**
 	 * Índice para comprobar si hay más elementos antes o después en el
@@ -46,7 +43,7 @@ public class AsignarTurno extends FuncionalidadesGUI {
 	/**
 	 * Create the dialog.
 	 */
-	public AsignarTurno(ListaPersonas empleados) {
+	public AsignarTurno(ArrayList<Persona> personas) {
 		super();
 		cmbxPuesto.setEnabled(false);
 		cmbxZona.setLocation(225, 284);
@@ -62,14 +59,16 @@ public class AsignarTurno extends FuncionalidadesGUI {
 		okButton.setVisible(false);
 		btnGuardar.setVisible(false);
 		btnComparar.setVisible(false);
+		
+		cmbxTurno.setEnabled(false);
 
-		this.empleados = empleados;
+		
+		this.empleados = mostrarPuesto(personas);
+		this.empleadoSala = (EmpleadoSala) empleados.getIndex(indice);
 
 		comprobar();
 
-		cmbxTurno.setModel(new DefaultComboBoxModel<Turno>(Turno.values()));
-		cmbxTurno.setEnabled(false);
-
+		
 		/** ***************** Funcionalidades Botones ****************** */
 
 		btnAnterior.addActionListener(new ActionListener() {
@@ -88,6 +87,7 @@ public class AsignarTurno extends FuncionalidadesGUI {
 
 		btnCambiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cmbxTurno.setModel(new DefaultComboBoxModel<Turno>(Turno.values()));
 				cmbxTurno.setEnabled(true);
 				btnCambiar.setVisible(false);
 				btnGuardar.setVisible(true);
@@ -98,10 +98,6 @@ public class AsignarTurno extends FuncionalidadesGUI {
 			public void actionPerformed(ActionEvent e) {
 				modificarTurno();
 				funcionalidadGuardado();
-				System.out.println("\n\nModificación:\n");
-				System.out.println(empleadoSala.getNombreYApellidos());
-				System.out.println(((EmpleadoSala) empleadoSala).getPuesto());
-				System.out.println(((EmpleadoSala) empleadoSala).getTurno());
 			}
 		});
 
@@ -160,7 +156,6 @@ public class AsignarTurno extends FuncionalidadesGUI {
 	 * @param persona
 	 */
 	private void mostrarEmpleado(Persona persona) {
-		System.out.println(empleadoSala);
 		txfldNombreApellidos.setText(persona.getNombreYApellidos());
 		txfldDni.setText(persona.getDni());
 		cmbxPuesto.addItem(((EmpleadoSala) persona).getPuesto());
@@ -171,13 +166,17 @@ public class AsignarTurno extends FuncionalidadesGUI {
 	}
 
 
-	
-	
-
-	
-	
-	
-	
+	/**
+	 * Colección de Empleados de Sala.
+	 * @param empleados
+	 * @return colección de empleados de sala.
+	 */
+	private ListaPersonas mostrarPuesto(ArrayList<Persona> empleados) {
+		ListaPersonas mostrarPuesto = new ListaPersonas();
+		for (Persona persona : empleados)
+			mostrarPuesto.agregarPuesto(persona);
+		return mostrarPuesto;
+	}
 
 	
 	/**
@@ -186,25 +185,19 @@ public class AsignarTurno extends FuncionalidadesGUI {
 	 * @param empleados
 	 */
 	private void modificarTurno() {
-		empleadoSala = (EmpleadoSala) empleados.getIndex(indice);
-		System.out.println("\nAntes de Modificar:\n");
-		System.out.println(empleadoSala.getNombreYApellidos());
-		System.out.println(((EmpleadoSala) empleadoSala).getPuesto());
-		System.out.println(((EmpleadoSala) empleadoSala).getTurno());
 		switch ((Turno) cmbxTurno.getSelectedItem()) {
 		case SIN_TURNO:
-			((EmpleadoSala) empleadoSala).setTurno(Turno.SIN_TURNO);
+			empleadoSala.setTurno(Turno.SIN_TURNO);
 			break;
 		case TURNO_DIURNO:
-			((EmpleadoSala) empleadoSala).setTurno(Turno.TURNO_DIURNO);
+			empleadoSala.setTurno(Turno.TURNO_DIURNO);
+			 //((EmpleadoSala) Gestion.empleados.getIndex(indice)).setTurno(Turno.TURNO_DIURNO);
 			break;
 		case TURNO_TARDE:
-			((EmpleadoSala) empleadoSala).setTurno(Turno.TURNO_TARDE);
+			empleadoSala.setTurno(Turno.TURNO_TARDE);
 			break;
 		case TURNO_NOCTURNO:
-			((EmpleadoSala) empleadoSala).setTurno(Turno.TURNO_NOCTURNO);
-			break;
-		default:
+			empleadoSala.setTurno(Turno.TURNO_NOCTURNO);
 			break;
 		}
 	}

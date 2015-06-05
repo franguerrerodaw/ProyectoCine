@@ -25,8 +25,7 @@ public class ListaPersonas implements Serializable {
 
 	
 	/**
-	 * Agrega una persona al ArrayList. agrega persona al ArrayList y modifica el valor del campo
-	 *         modificado
+	 * Agrega una persona al ArrayList. agrega persona al ArrayList y modifica el valor del campo  modificado
 	 * 
 	 * @param persona
 	 * @param dni
@@ -48,7 +47,6 @@ public class ListaPersonas implements Serializable {
 	/**
 	 * Elimina a la persona elegida a través del DNI
 	 * 
-	 * @param id
 	 * @return persona que se va a eliminar
 	 * @throws PersonaNoExisteException
 	 * @throws DniInvalidoException
@@ -126,12 +124,12 @@ public class ListaPersonas implements Serializable {
 		return listaPersonas.size();
 	}
 	
-	
-	public void set(int index, Persona persona) {
-		listaPersonas.set(index, persona);
-	}
-	
 
+	/**
+	 * Genera un ArrayList de un tipo de empleado específico.
+	 * @param puesto del empleado.
+	 * @return ArrayList específico de empleados.
+	 */
 	public ArrayList<Persona> getPuesto(Puesto puesto) {
 		ArrayList<Persona> arrPersona = new ArrayList<Persona>();
 		switch (puesto) {
@@ -153,20 +151,9 @@ public class ListaPersonas implements Serializable {
 					arrPersona.add(empleado);
 			}
 			return arrPersona;
-			// default:
-			// break;
 		}
-		// return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "ListaPersonas [listaPersonas=" + listaPersonas + "]";
-	}
+
 
 }
