@@ -1,5 +1,6 @@
 package entornoGrafico;
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -7,17 +8,21 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import javax.swing.JSeparator;
+
 import peliculas.ListaPeliculas;
 import personal.ListaPersonas;
 import personal.Persona;
 import personal.Puesto;
 import utiles.Gestion;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -38,76 +43,8 @@ public class Principal {
 	 * JPanel content Panel
 	 */
 	protected final JPanel contentPanel = new JPanel();
+
 	
-	/**
-	 * Instancia de la clase ListaPeliculas
-	 */
-	public static ListaPeliculas cartelera = new ListaPeliculas();
-	
-	/**
-	 * Instancia de la clase ListaPersonas
-	 */
-	public static ListaPersonas empleados = new ListaPersonas();
-	
-	/**
-	 * Objeto de la clase AgregarPelicula
-	 */
-	protected AgregarPelicula agregarPelicula;
-	
-	/**
-	 * Objeto de la clase EliminarPelicula
-	 */
-	protected EliminarPelicula eliminarPelicula;
-	
-	/**
-	 * Objeto de la clase MostrarCartelera
-	 */
-	protected MostrarCartelera mostrarCartelera;
-	
-	/**
-	 * Objeto de la clase AgregarEmpleado
-	 */
-	protected AgregarEmpleado agregarEmpleado;
-	
-	/**
-	 * Objeto de la clase EliminarEmpleado
-	 */
-	protected EliminarEmpleado eliminarEmpleado;
-	
-	/**
-	 * Objeto de la clase MostrarEmpleado
-	 */
-	protected MostrarEmpleados mostrarEmpleados;
-	
-	/**
-	 * Objeto de la clase BuscarEmpleado
-	 */
-	protected BuscarEmpleado buscarEmpleado;
-	
-	/**
-	 * Objeto de la clase ElegirPuesto
-	 */
-	protected ElegirPuesto elegirPuesto;
-	
-	/**
-	 * Objeto de la clase AsignarTurno
-	 */
-	protected AsignarTurno asignarTurno;
-	
-	/**
-	 * Objeto de la clase AsignarZonaLimpieza
-	 */
-	protected AsignarZonaLimpieza asignarZonaLimpieza;
-	
-	/**
-	 * Objeto de la clase Ayuda
-	 */
-	protected Ayuda ayuda;
-	
-	/**
-	 * Objeto de la clase AcercaDe
-	 */
-	protected AcercaDe acercaDe;
 
 	/**
 	 * Launch the application.
@@ -158,7 +95,7 @@ public class Principal {
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
 		mntmNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Gestion.nuevo(frame, contentPanel, cartelera);
+				Gestion.nuevo();
 			}
 		});
 		mntmNuevo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
@@ -167,7 +104,7 @@ public class Principal {
 		JMenuItem mntmAbrir = new JMenuItem("Abrir");
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gestion.abrir(frame, contentPanel, cartelera);
+				Gestion.abrir();
 			}
 		});
 		mntmAbrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
@@ -176,7 +113,7 @@ public class Principal {
 		JMenuItem mntmGuardar = new JMenuItem("Guardar");
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gestion.guardar(frame, cartelera);
+				Gestion.guardar();
 			}
 		});
 		mntmGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
@@ -185,7 +122,7 @@ public class Principal {
 		JMenuItem mntmGuardarComo = new JMenuItem("Guardar como...");
 		mntmGuardarComo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gestion.guardarComo(cartelera);
+				Gestion.guardarComo();
 			}
 		});
 		mntmGuardarComo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
@@ -197,10 +134,10 @@ public class Principal {
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				Gestion.salir();
 			}
 		});
-		mntmSalir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
+		mntmSalir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		mnArchivo.add(mntmSalir);
 		
 		
@@ -212,7 +149,7 @@ public class Principal {
 		JMenuItem mntmNuevaPelcula = new JMenuItem("A\u00F1adir");
 		mntmNuevaPelcula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				agregarPelicula = new AgregarPelicula(cartelera);
+				AgregarPelicula agregarPelicula = new AgregarPelicula(Gestion.cartelera);
 				agregarPelicula.setVisible(true);
 			}
 		});
@@ -221,10 +158,10 @@ public class Principal {
 		JMenuItem mntmEliminarPelcula = new JMenuItem("Eliminar");
 		mntmEliminarPelcula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (cartelera.size() == 0) {
+				if (Gestion.cartelera.size() == 0) {
 					JOptionPane.showMessageDialog(contentPanel, "No hay películas en la cartelera.");
 				} else {
-					eliminarPelicula = new EliminarPelicula(cartelera);
+					EliminarPelicula eliminarPelicula = new EliminarPelicula(Gestion.cartelera);
 					eliminarPelicula.setVisible(true);
 				}
 			}
@@ -234,10 +171,10 @@ public class Principal {
 		JMenuItem mntmMostrarCartelera = new JMenuItem("Mostrar");
 		mntmMostrarCartelera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (cartelera.size() == 0){
+				if (Gestion.cartelera.size() == 0){
 					JOptionPane.showMessageDialog(contentPanel, "No hay películas en la cartelera.");
 				} else {
-					mostrarCartelera = new MostrarCartelera(cartelera);
+					MostrarCartelera mostrarCartelera = new MostrarCartelera(Gestion.cartelera);
 					mostrarCartelera.setVisible(true);
 				}
 			}
@@ -254,7 +191,7 @@ public class Principal {
 		JMenuItem mntmAgregarEmpleado = new JMenuItem("A\u00F1adir");
 		mntmAgregarEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				agregarEmpleado = new AgregarEmpleado(empleados);
+				AgregarEmpleado agregarEmpleado = new AgregarEmpleado(Gestion.empleados);
 				agregarEmpleado.setVisible(true);
 				
 			}
@@ -264,10 +201,10 @@ public class Principal {
 		JMenuItem mntmEliminarEmpleado = new JMenuItem("Eliminar");
 		mntmEliminarEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (empleados.size() == 0){
+				if (Gestion.empleados.size() == 0){
 					JOptionPane.showMessageDialog(contentPanel, "No existen empleados.");
 				} else {
-					eliminarEmpleado = new EliminarEmpleado(empleados);
+					EliminarEmpleado eliminarEmpleado = new EliminarEmpleado(Gestion.empleados);
 					eliminarEmpleado.setVisible(true);
 				}
 			}
@@ -277,10 +214,10 @@ public class Principal {
 		JMenuItem mntmMostrarEmpleados = new JMenuItem("Mostrar");
 		mntmMostrarEmpleados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (empleados.size() == 0){
+				if (Gestion.empleados.size() == 0){
 					JOptionPane.showMessageDialog(contentPanel, "No existen empleados.");
 				} else {
-					mostrarEmpleados = new MostrarEmpleados(empleados);
+					MostrarEmpleados mostrarEmpleados = new MostrarEmpleados(Gestion.empleados);
 					mostrarEmpleados.setVisible(true);
 				}
 			}
@@ -290,10 +227,10 @@ public class Principal {
 		JMenuItem mntmBuscarEmpleados = new JMenuItem("Buscar");
 		mntmBuscarEmpleados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (empleados.size() == 0){
+				if (Gestion.empleados.size() == 0){
 					JOptionPane.showMessageDialog(contentPanel, "No existen empleados.");
 				} else {
-					buscarEmpleado = new BuscarEmpleado(empleados);
+					BuscarEmpleado buscarEmpleado = new BuscarEmpleado(Gestion.empleados);
 					buscarEmpleado.setVisible(true);
 				}
 			}
@@ -303,10 +240,10 @@ public class Principal {
 		JMenuItem mntmBuscarPorPuesto = new JMenuItem("Buscar por Puesto");
 		mntmBuscarPorPuesto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (empleados.size() == 0){
+				if (Gestion.empleados.size() == 0){
 					JOptionPane.showMessageDialog(contentPanel, "No existen empleados.");
 				} else {
-					elegirPuesto = new ElegirPuesto(empleados);
+					ElegirPuesto elegirPuesto = new ElegirPuesto(Gestion.empleados);
 					elegirPuesto.setVisible(true);
 				}
 			}
@@ -323,14 +260,7 @@ public class Principal {
 		JMenuItem mntmAsignarTurno = new JMenuItem("Asignar Turno");
 		mntmAsignarTurno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Puesto puesto = Puesto.EMPLEADO_SALA;
-				ArrayList<Persona> persona = empleados.getPuesto(puesto);
-				if (persona.isEmpty()) {
-					JOptionPane.showMessageDialog(contentPanel, "No existe ningún empleado de sala para asignarle un turno.", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				asignarTurno = new AsignarTurno(persona);
-				asignarTurno.setVisible(true);
+				agregarEmpleadoSala();
 			}
 		});
 		mnFuncionalidades.add(mntmAsignarTurno);
@@ -339,16 +269,42 @@ public class Principal {
 		mntmAsignarZonaLimpieza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Puesto puesto = Puesto.LIMPIEZA;
-				ArrayList<Persona> persona = empleados.getPuesto(puesto);
+				ArrayList<Persona> persona = Gestion.empleados.getPuesto(puesto);
 				if (persona.isEmpty()) {
-					JOptionPane.showMessageDialog(contentPanel, "No existe ningún limpiador para asignarle una zona de limpieza.", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(contentPanel, "No existe ningún limpiador para asignarle una zona de limpieza.");
 					return;
 				}
-				asignarZonaLimpieza = new AsignarZonaLimpieza(persona);
+				AsignarZonaLimpieza asignarZonaLimpieza = new AsignarZonaLimpieza(persona);
 				asignarZonaLimpieza.setVisible(true);
 			}
 		});
 		mnFuncionalidades.add(mntmAsignarZonaLimpieza);
+		
+		JMenuItem mntmVerSalarios = new JMenuItem("Ver Salarios");
+		mntmVerSalarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Gestion.empleados.size() == 0){
+					JOptionPane.showMessageDialog(contentPanel, "No existen empleados.");
+				} else {
+					VerSalarios verSalarios = new VerSalarios(Gestion.empleados);
+					verSalarios.setVisible(true);
+				}
+			}
+		});
+		mnFuncionalidades.add(mntmVerSalarios);
+		
+		JMenuItem mntmCompararSueldos = new JMenuItem("Comparar Sueldos");
+		mntmCompararSueldos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Gestion.empleados.size() < 2){
+					JOptionPane.showMessageDialog(contentPanel, "No existen como mínimo 2 empleados para comparar su sueldo.");
+				} else {
+					CompararSueldos compararSueldos = new CompararSueldos(Gestion.empleados);
+					compararSueldos.setVisible(true);
+				}
+			}
+		});
+		mnFuncionalidades.add(mntmCompararSueldos);
 		
 		
 		
@@ -362,7 +318,7 @@ public class Principal {
 		JMenuItem mntmAyuda = new JMenuItem("Ayuda");
 		mntmAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ayuda = new Ayuda();
+				Ayuda ayuda = new Ayuda();
 				ayuda.setVisible(true);
 			}
 		});
@@ -372,7 +328,7 @@ public class Principal {
 		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de...");
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				acercaDe = new AcercaDe();
+				AcercaDe acercaDe = new AcercaDe();
 				acercaDe.setVisible(true);
 			}
 		});
@@ -387,20 +343,20 @@ public class Principal {
 		WindowListener exitListener = new WindowAdapter() {
 			@Override
 				public void windowClosing(WindowEvent e) {
-					if (Gestion.getModificado()){
-						int confirm = JOptionPane.showOptionDialog(null, "La administración del cine ha sido modificada. \n¿Desea guardar los cambios?", "Salir", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-						if (confirm == 0)
-							Gestion.guardarComo(cartelera);
-						if (confirm == 1)
-							System.exit(0);
-						else
-							return;
-					}
-					System.exit(0);
+					Gestion.salir();
 				}
 		};
 		frame.addWindowListener(exitListener);
 		
 		
+	}
+
+	private void agregarEmpleadoSala() {
+		if (Gestion.empleados.getPuesto(Puesto.EMPLEADO_SALA).isEmpty()) {
+			JOptionPane.showMessageDialog(contentPanel, "No existe ningún empleado de sala para asignarle un turno.");
+			return;
+		}
+		AsignarTurno asignarTurno = new AsignarTurno(Gestion.empleados);
+		asignarTurno.setVisible(true);
 	}
 }

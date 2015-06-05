@@ -7,7 +7,7 @@ import java.util.Date;
  * @version 1.0
  *
  */
-public class Director extends Persona implements Serializable, Salariable {
+public class Director extends Persona implements Serializable {
 	
 	/**
 	 * Serial version UID
@@ -72,18 +72,5 @@ public class Director extends Persona implements Serializable, Salariable {
 	}
 
 
-	@Override
-	public int Salario(int horasSemanales) {
-		int salarioBase = 8;
-		return salarioBase * horasSemanales;
-		
-	}
-
-
-	@Override
-	public void Bonificacion() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

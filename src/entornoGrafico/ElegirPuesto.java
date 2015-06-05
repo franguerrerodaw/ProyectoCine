@@ -108,18 +108,7 @@ public class ElegirPuesto extends JDialog {
 				okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						Puesto puesto = getPuesto();
-						if (puesto == null)
-							JOptionPane.showMessageDialog(contentPanel, "Selecciona un puesto y pulsa OK.", "Error", JOptionPane.ERROR_MESSAGE);
-						else{
-							ArrayList<Persona> persona = empleados.getPuesto(puesto);
-							if (persona.isEmpty()) {
-								JOptionPane.showMessageDialog(contentPanel, "No existe ningún empleado con el puesto elegido.", "Error", JOptionPane.ERROR_MESSAGE);
-								return;
-							}
-							mostrarPorPuesto = new MostrarPorPuesto(persona);
-							mostrarPorPuesto.setVisible(true);
-						}
+						elegirPuesto(empleados);
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -152,5 +141,21 @@ public class ElegirPuesto extends JDialog {
 		else if (rdbtnLimpiador.isSelected())
 			return Puesto.LIMPIEZA;
 		return null;
+	}
+
+
+	private void elegirPuesto(final ListaPersonas empleados) {
+		Puesto puesto = getPuesto();
+		if (puesto == null)
+			JOptionPane.showMessageDialog(contentPanel, "Selecciona un puesto y pulsa OK.", "Error", JOptionPane.ERROR_MESSAGE);
+		else{
+			ArrayList<Persona> persona = empleados.getPuesto(puesto);
+			if (persona.isEmpty()) {
+				JOptionPane.showMessageDialog(contentPanel, "No existe ningún empleado con el puesto elegido.", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			mostrarPorPuesto = new MostrarPorPuesto(persona);
+			mostrarPorPuesto.setVisible(true);
+		}
 	}
 }

@@ -204,6 +204,8 @@ public class PeliculasGUI extends JDialog {
 		txtArSinopsis.setWrapStyleWord(true);
 		
 		
+		
+		
 		{
 			buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

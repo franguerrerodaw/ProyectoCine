@@ -1,4 +1,5 @@
 package personal;
+import java.io.Serializable;
 import java.util.Date;
 
 import personal.Uniforme;
@@ -8,7 +9,7 @@ import personal.Uniforme;
  * @version 1.0
  *
  */
-public class EmpleadoSala extends Persona implements Salariable {
+public class EmpleadoSala extends Persona implements Serializable {
 	
 	/**
 	 * Serial version UID
@@ -120,28 +121,17 @@ public class EmpleadoSala extends Persona implements Salariable {
 	public void setTurno(Turno turno) {
 		this.turno = turno;
 	}
-	
 
-	@Override
-	public int Salario(int horasSemanales) {
-		int salarioBase = 6;
-		return salarioBase * horasSemanales;
-		
-	}
 
-	
-	@Override
-	public void Bonificacion() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	/**
-	 * Funcionalidad
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
-	public void turno(){
-	//Director.asignarTurno();//asignar turnos a los empleados
+	@Override
+	public String toString() {
+		return "EmpleadoSala: puesto=" + puesto + " turno=" + turno + "]";
 	}
+	
+	
 
 }

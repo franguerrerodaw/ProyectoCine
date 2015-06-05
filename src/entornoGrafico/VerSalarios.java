@@ -1,22 +1,22 @@
 package entornoGrafico;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+
 import personal.Director;
 import personal.EmpleadoSala;
 import personal.Limpiador;
 import personal.ListaPersonas;
 import personal.Persona;
 /**
- * Muestra a los empleados de un puesto determinado.
+ * Ver el salario de todos los empleados.
  * @author Francisco Javier Guerrero Molina
  * @version 1.0
  *
  */
-public class MostrarPorPuesto extends EmpleadosGUI {
+public class VerSalarios extends FuncionalidadesGUI {
 
 	/**
-	 * Serial Version UID
+	 * Serial version UID
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -26,42 +26,34 @@ public class MostrarPorPuesto extends EmpleadosGUI {
 	private ListaPersonas empleados;
 	
 	/**
-	 * Índice para los botones anterior / siguiente
+	 * Índice para comprobar si hay más elementos antes o después en el ArrayList.
 	 */
 	private int indice = -1;
-
 
 	/**
 	 * Create the dialog.
 	 */
-	public MostrarPorPuesto(ArrayList<Persona> empleados) {
+	public VerSalarios(ListaPersonas empleados) {
 		super();
-		lblUniforme.setLocation(410, 266);
-		cmbxUniforme.setLocation(410, 283);
-		setModal(true);
-		setTitle("Mostrar Empleados por Puesto");
-		
-		
-		cmbxUniforme.setEnabled(false);
-		txfldTitulacion.setEditable(false);
-		txfldHorasSemanales.setEditable(false);
 		cmbxPuesto.setEnabled(false);
-		txfldPrecioHora.setEditable(false);
-		txfldAlta.setEditable(false);
-		txfldTelefono.setEditable(false);
-		txfldFechaNacimiento.setEditable(false);
-		txfldEmail.setEditable(false);
-		txfldDireccion.setEditable(false);
-		txfldDni.setEditable(false);
-		txfldNombreApellidos.setEditable(false);
+		setModal(true);
+		setTitle("Ver Salarios de los Empleados");
 		
 		
-		lblTitulacion.setVisible(false);
-		txfldTitulacion.setVisible(false);
-		lblUniforme.setVisible(false);
-		cmbxUniforme.setVisible(false);
-		
+		lblZona.setVisible(false);
+		cmbxZona.setVisible(false);
+		lblTurno.setVisible(false);
+		cmbxTurno.setVisible(false);
 		okButton.setVisible(false);
+		btnCambiar.setVisible(false);
+		btnGuardar.setVisible(false);
+		btnComparar.setVisible(false);
+		
+		
+		this.empleados = empleados;
+		
+		comprobar();
+		
 		
 		
 		/** ***************** Funcionalidades Botones ******************  */
@@ -85,9 +77,6 @@ public class MostrarPorPuesto extends EmpleadosGUI {
 			}
 		});
 		
-		this.empleados = mostrarPuesto(empleados);
-		
-		comprobar();
 	}
 	
 	
@@ -99,6 +88,7 @@ public class MostrarPorPuesto extends EmpleadosGUI {
 		mostrarEmpleado(empleados.getIndex(--indice));
 		comprobarArray();
 	}
+	
 	
 	/**
 	 * Muestra el elemento siguiente del ArrayList empleados.
@@ -133,64 +123,31 @@ public class MostrarPorPuesto extends EmpleadosGUI {
 	}
 	
 	/**
-	 * Muestra la información almacenada en el ArrayList.
+	 * Muestra el empleado con la información almacenada en el ArrayList.
 	 * @param persona
 	 */
 	private void mostrarEmpleado(Persona persona) {
+		
 		txfldNombreApellidos.setText(persona.getNombreYApellidos());
 		txfldDni.setText(persona.getDni());
-		txfldDireccion.setText(persona.getDireccion());
-		txfldEmail.setText(persona.getEmail());
-		txfldFechaNacimiento.setText(formato.format(persona.getFechaNacimiento()));
-		txfldTelefono.setText(persona.getTelefono());
-		txfldAlta.setText(formato.format(persona.getAlta()));
-		txfldPrecioHora.setText(Integer.toString(persona.getPrecioHora()));
-		txfldHorasSemanales.setText(Integer.toString(persona.getHorasSemanales()));
+		txfldSueldo.setText(Integer.toString(persona.salario()));
+		txfldAntiguedad.setText(Integer.toString(persona.bonificacion()));
 		
-		if (persona instanceof Director){
+		if (persona instanceof Director) {
 			Director director = (Director) persona;
-			lblTitulacion.setVisible(true);
-			txfldTitulacion.setVisible(true);
-			lblUniforme.setVisible(false);
-			cmbxUniforme.setVisible(false);
 			cmbxPuesto.addItem(director.getPuesto());
 			cmbxPuesto.setSelectedItem(director.getPuesto());
-			txfldTitulacion.setText(director.getTitulacion());
 			
 		} else if (persona instanceof EmpleadoSala) {
 			EmpleadoSala empleadoSala = (EmpleadoSala) persona;
-			lblTitulacion.setVisible(true);
-			txfldTitulacion.setVisible(true);
-			lblUniforme.setVisible(true);
-			cmbxUniforme.setVisible(true);
 			cmbxPuesto.addItem(empleadoSala.getPuesto());
 			cmbxPuesto.setSelectedItem(empleadoSala.getPuesto());
-			txfldTitulacion.setText(empleadoSala.getTitulacion());
-			cmbxUniforme.addItem(empleadoSala.getUniforme());
-			cmbxUniforme.setSelectedItem(empleadoSala.getUniforme());
-			
-		} else if (persona instanceof  Limpiador) {
+		} else if (persona instanceof Limpiador) {
 			Limpiador limpiador = (Limpiador) persona;
-			lblTitulacion.setVisible(false);
-			txfldTitulacion.setVisible(false);
-			lblUniforme.setVisible(false);
-			cmbxUniforme.setVisible(false);
 			cmbxPuesto.addItem(limpiador.getPuesto());
 			cmbxPuesto.setSelectedItem(limpiador.getPuesto());
 		}
 		
-	}
-	
-	/**
-	 * Colección de empleados.
-	 * @param empleados
-	 * @return colección de empleados.
-	 */
-	private ListaPersonas mostrarPuesto(ArrayList<Persona> empleados) {
-		ListaPersonas mostrarPuesto = new ListaPersonas();
-		for (Persona persona : empleados)
-			mostrarPuesto.agregarPuesto(persona);
-		return mostrarPuesto;
 	}
 
 }

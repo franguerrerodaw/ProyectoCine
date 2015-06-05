@@ -27,9 +27,26 @@ public class BuscarEmpleado extends EmpleadosGUI {
 	 */
 	public BuscarEmpleado(final ListaPersonas empleados) {
 		super();
+		lblUniforme.setLocation(410, 266);
+		cmbxUniforme.setLocation(410, 283);
+		lblTitulacion.setLocation(33, 266);
+		txfldTitulacion.setLocation(33, 283);
+		
 		setModal(true);
 		setTitle("Buscar Empleado por DNI");
 		
+		
+		cmbxUniforme.setEnabled(false);
+		txfldTitulacion.setEditable(false);
+		txfldHorasSemanales.setEditable(false);
+		cmbxPuesto.setEnabled(false);
+		txfldPrecioHora.setEditable(false);
+		txfldAlta.setEditable(false);
+		txfldTelefono.setEditable(false);
+		txfldFechaNacimiento.setEditable(false);
+		txfldEmail.setEditable(false);
+		txfldDireccion.setEditable(false);
+		txfldNombreApellidos.setEditable(false);
 		
 		lblTitulacion.setVisible(false);
 		txfldTitulacion.setVisible(false);

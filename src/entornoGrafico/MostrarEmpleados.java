@@ -38,9 +38,23 @@ public class MostrarEmpleados extends EmpleadosGUI {
 	 */
 	public MostrarEmpleados(ListaPersonas empleados) {
 		super();
+		lblUniforme.setLocation(410, 266);
+		cmbxUniforme.setLocation(410, 283);
 		setModal(true);
 		setTitle("Mostrar Empleados");
 		
+		cmbxUniforme.setEnabled(false);
+		txfldTitulacion.setEditable(false);
+		txfldHorasSemanales.setEditable(false);
+		cmbxPuesto.setEnabled(false);
+		txfldPrecioHora.setEditable(false);
+		txfldAlta.setEditable(false);
+		txfldTelefono.setEditable(false);
+		txfldFechaNacimiento.setEditable(false);
+		txfldEmail.setEditable(false);
+		txfldDireccion.setEditable(false);
+		txfldDni.setEditable(false);
+		txfldNombreApellidos.setEditable(false);
 		
 		lblTitulacion.setVisible(false);
 		txfldTitulacion.setVisible(false);
@@ -134,23 +148,34 @@ public class MostrarEmpleados extends EmpleadosGUI {
 		
 		if (persona instanceof Director){
 			Director director = (Director) persona;
+			lblTitulacion.setVisible(true);
+			txfldTitulacion.setVisible(true);
+			lblUniforme.setVisible(false);
+			cmbxUniforme.setVisible(false);
 			cmbxPuesto.addItem(director.getPuesto());
 			cmbxPuesto.setSelectedItem(director.getPuesto());
 			txfldTitulacion.setText(director.getTitulacion());
-			cmbxUniforme.setVisible(false);
+			
 		} else if (persona instanceof EmpleadoSala) {
 			EmpleadoSala empleadoSala = (EmpleadoSala) persona;
+			lblTitulacion.setVisible(true);
+			txfldTitulacion.setVisible(true);
+			lblUniforme.setVisible(true);
+			cmbxUniforme.setVisible(true);
 			cmbxPuesto.addItem(empleadoSala.getPuesto());
 			cmbxPuesto.setSelectedItem(empleadoSala.getPuesto());
 			txfldTitulacion.setText(empleadoSala.getTitulacion());
 			cmbxUniforme.addItem(empleadoSala.getUniforme());
 			cmbxUniforme.setSelectedItem(empleadoSala.getUniforme());
+			
 		} else if (persona instanceof  Limpiador) {
 			Limpiador limpiador = (Limpiador) persona;
+			lblTitulacion.setVisible(false);
+			txfldTitulacion.setVisible(false);
+			lblUniforme.setVisible(false);
+			cmbxUniforme.setVisible(false);
 			cmbxPuesto.addItem(limpiador.getPuesto());
 			cmbxPuesto.setSelectedItem(limpiador.getPuesto());
-			txfldTitulacion.setVisible(false);
-			cmbxUniforme.setVisible(false);
 		}
 		
 		

@@ -1,5 +1,6 @@
 package personal;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @version 1.0
  *
  */
-public class Limpiador extends Persona implements Salariable {
+public class Limpiador extends Persona implements Serializable {
 	
 	/**
 	 * Serial version UID
@@ -78,25 +79,6 @@ public class Limpiador extends Persona implements Salariable {
 	 */
 	public void setZona(Zona zona) {
 		this.zona = zona;
-	}
-
-	@Override
-	public int Salario(int horasSemanales) {
-		int salarioBase = 7;
-		return salarioBase * horasSemanales;
-	}
-
-	@Override
-	public void Bonificacion() {
-		// TODO Auto-generated method stub
-	}
-	
-	/**
-	 * Funcionalidad 
-	 * @param zona
-	 */
-	void limpiar(Zona zona){
-		//historial.add(new parteLimpieza(zona, Calendar.getInstance()));
 	}
 
 }

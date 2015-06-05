@@ -123,5 +123,6 @@ public class MostrarCartelera extends PeliculasGUI {
 		txfldFechaEstreno.setText(formato.format(pelicula.getFechaEstreno()));
 		txfldDuracion.setText(pelicula.getDuracion());
 		txtArSinopsis.setText(pelicula.getSinopsis());
+		txtArSinopsis.setCaretPosition(0);
 	}
 }

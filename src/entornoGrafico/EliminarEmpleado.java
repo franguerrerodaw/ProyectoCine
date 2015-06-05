@@ -88,7 +88,7 @@ public class EliminarEmpleado extends EmpleadosGUI {
 					switch (n) {
 						case JOptionPane.YES_OPTION:
 							empleados.eliminar(persona);
-							txfldDni.setText("");
+							txfldNombreApellidos.setText("");
 							txfldDni.setText("");
 							break;
 						}

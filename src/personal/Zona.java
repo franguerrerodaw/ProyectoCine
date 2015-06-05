@@ -5,7 +5,7 @@ public enum Zona {
 	/**
 	 * Selecciona un elemento de la enumeración
 	 */
-	SELECCIONA,
+	SIN_ZONA,
 	
 	/**
 	 * Elemento local recibidor del cine

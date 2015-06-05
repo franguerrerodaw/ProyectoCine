@@ -8,9 +8,9 @@ package personal;
 public enum Turno {
 	
 	/**
-	 * Selecciona un turno.
+	 * Elemento sin turno.
 	 */
-	SELECCIONA,
+	SIN_TURNO,
 	
 	/**
 	 * Elemento turno diurno.
